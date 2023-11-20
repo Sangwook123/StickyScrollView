@@ -52,12 +52,12 @@ internal class StickyScrollPresenter(
         }
     }
 
-    fun initStickyHeader(headerTop: Int?) {
+    fun initStickyHeader(headerTop: Int?, position: Int) {
         if (headerTop == null) {
             mStickyHeaderInitialLocation = 0
             return
         }
-        mStickyHeaderInitialLocation = headerTop
+        mStickyHeaderInitialLocation = headerTop - position
     }
 
     fun onScroll(scrollY: Int) {
@@ -96,8 +96,8 @@ internal class StickyScrollPresenter(
         handleFooterStickiness(mStickyScrollPresentation.currentScrollYPos)
     }
 
-    fun recomputeHeaderLocation(headerTop: Int) {
-        initStickyHeader(headerTop)
+    fun recomputeHeaderLocation(headerTop: Int, position: Int) {
+        initStickyHeader(headerTop, position)
         handleHeaderStickiness(mStickyScrollPresentation.currentScrollYPos)
     }
 }

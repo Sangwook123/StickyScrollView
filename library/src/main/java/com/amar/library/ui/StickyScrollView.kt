@@ -27,7 +27,7 @@ class StickyScrollView @JvmOverloads constructor(
     private var stickyFooterView: View? = null
     private var stickyHeaderView: View? = null
     private var mStickyScrollPresenter: StickyScrollPresenter
-
+    private var position = 0
     init {
         val screenInfoProvider: IScreenInfoProvider = ScreenInfoProvider(context)
         val resourceProvider: IResourceProvider =
@@ -47,7 +47,7 @@ class StickyScrollView @JvmOverloads constructor(
             mStickyScrollPresenter.recomputeFooterLocation(getFooterTop())
         }
         stickyHeaderView?.let {
-            mStickyScrollPresenter.recomputeHeaderLocation(it.top)
+            mStickyScrollPresenter.recomputeHeaderLocation(it.top, position)
         }
     }
 
@@ -85,6 +85,11 @@ class StickyScrollView @JvmOverloads constructor(
     val isHeaderSticky: Boolean
         get() = mStickyScrollPresenter.isHeaderSticky
 
+    fun setPosition(context: Context, dp: Float) {
+        val scale = context.resources.displayMetrics.density
+        position = (dp * scale + 0.5f).toInt()
+    }
+
     fun setHeaderView(@IdRes id: Int) {
         stickyHeaderView = findViewById(id)
         stickyHeaderView?.onLayoutUpdate { initialiseHeader() }
@@ -100,7 +105,7 @@ class StickyScrollView @JvmOverloads constructor(
     }
 
     private fun initialiseHeader(){
-        mStickyScrollPresenter.initStickyHeader(stickyHeaderView?.top)
+        mStickyScrollPresenter.initStickyHeader(stickyHeaderView?.top, position)
     }
 
     private fun initialiseFooter(){

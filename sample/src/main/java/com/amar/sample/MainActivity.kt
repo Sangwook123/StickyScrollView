@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         findViewById<View>(R.id.other_product).setOnClickListener(this)
         mainShoeView = findViewById(R.id.main_shoe_picture)
         scrollView?.setFooterView(R.id.buttons)
+        scrollView?.setPosition(this,80f)
+        scrollView?.setHeaderView(R.id.title)
     }
 
     override fun onClick(v: View) {
